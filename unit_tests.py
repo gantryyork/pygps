@@ -83,3 +83,27 @@ class TestConvert(TestCase):
     def test_dms_correct_negative_values(self):
         result = gps.convert.dms_correct(-89.111, -65.111, -65.222, 'sOUth')
         self.assertEqual((-90, 6, 5, 'S'), result)
+
+    def test_dec_to_longitude_positive(self):
+        result = gps.convert.dec_to_longitude(45.1111)
+        self.assertEqual(45.1111, result)
+
+    def test_dec_to_longitude_negative(self):
+        result = gps.convert.dec_to_longitude(-37.9999)
+        self.assertEqual(-37.9999, result)
+
+    def test_dec_to_longitude_pos_wrap1(self):
+        result = gps.convert.dec_to_longitude(182)
+        self.assertEqual(-88, result)
+
+    # def test_dec_to_longitude_pos_wrap2(self):
+    #     result = gps.convert.dec_to_longitute(362.2)
+    #     self.assertEqual(2.2, result)
+    #
+    # def test_dms_to_longitude_neg_wrap1(self):
+    #     result = gps.convert.dms_to_longitute(-180.9999)
+    #     self.assertEqual(179.0001, result)
+    #
+    # def test_dms_to_longitude_neg_wrap2(self):
+    #     result = gps.convert.dms_to_longitute(-180.9999)
+    #     self.assertEqual(179.0001, result)

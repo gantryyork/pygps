@@ -83,7 +83,12 @@ def dec_to_longitude(decimal):
     Returns:
         float: between -90 and 90
     """
-    pass
+    if abs(decimal) == decimal:
+        modulo = 180
+    else:
+        modulo = -180
+
+    return decimal % modulo
 
 
 def dec_to_latitude(decimal):
