@@ -83,12 +83,18 @@ def dec_to_longitude(decimal):
     Returns:
         float: between -90 and 90
     """
-    if abs(decimal) == decimal:
-        modulo = 180
-    else:
-        modulo = -180
+    sign = 1
+    if decimal < 0:
+        sign = -1
 
-    return decimal % modulo
+    half = int(decimal/180*sign) % 2
+
+    if half == 0:
+        longitude = 0 + (decimal % (sign*180))
+    elif half == 1:
+        longitude = -180*sign + (decimal % (sign*180))
+
+    return longitude
 
 
 def dec_to_latitude(decimal):
@@ -102,7 +108,24 @@ def dec_to_latitude(decimal):
     Returns:
         float: between -180 and 180
     """
-    pass
+
+    sign = 1
+    if decimal < 0:
+        sign = -1
+
+    quadrant = int(decimal/90*sign) % 4
+    decimal_mod = decimal % (sign*180)
+
+    if quadrant == 0:
+        latitude = 0 + decimal_mod
+    elif quadrant == 1:
+        latitude = sign*(180) - decimal_mod
+    elif quadrant == 2:
+        latitude = 0 - decimal_mod
+    elif quadrant == 3:
+        latitude = sign*(-180) + decimal_mod
+
+    return latitude
 
 
 def nm_to_km(nm):
@@ -145,12 +168,39 @@ def km_to_nm(km):
 
 
 def km_to_mi(km):
+    """
+    Converts kilometers to miles
+
+    Args:
+        km (float): kilometers
+
+    Returns:
+        float: value representing miles
+    """
     return km * 0.6721371
 
 
 def mi_to_nm(mi):
+    """
+    Converts miles to nautical miles
+
+    Args:
+        miles (float): miles
+
+    Returns:
+        float: value representing miles
+    """
     return mi * 0.868976
 
 
 def mi_to_km(mi):
+    """
+    Converts miles to kilometers
+
+    Args:
+        miles (float): miles
+
+    Returns:
+        float: value representing kilometers
+    """
     return mi * 1.60934
