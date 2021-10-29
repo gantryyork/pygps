@@ -84,26 +84,58 @@ class TestConvert(TestCase):
         result = gps.convert.dms_correct(-89.111, -65.111, -65.222, 'sOUth')
         self.assertEqual((-90, 6, 5, 'S'), result)
 
-    def test_dec_to_longitude_positive(self):
-        result = gps.convert.dec_to_longitude(45.1111)
-        self.assertEqual(45.1111, result)
+    def test_dec_to_longitude_wrap0_neg(self):
+        result = gps.convert.dec_to_longitude(-10.999)
+        self.assertAlmostEqual(-10.999, result, 3)
 
-    def test_dec_to_longitude_negative(self):
-        result = gps.convert.dec_to_longitude(-37.9999)
-        self.assertEqual(-37.9999, result)
+    def test_dec_to_longitude_wrap1_neg(self):
+        result = gps.convert.dec_to_longitude(-182.000001)
+        self.assertAlmostEqual(178.000001, result, 3)
 
-    def test_dec_to_longitude_pos_wrap1(self):
-        result = gps.convert.dec_to_longitude(182)
-        self.assertEqual(-88, result)
+    def test_dec_to_longitude_wrap2_neg(self):
+        result = gps.convert.dec_to_longitude(-362.5)
+        self.assertAlmostEqual(-2.5, result, 3)
 
-    # def test_dec_to_longitude_pos_wrap2(self):
-    #     result = gps.convert.dec_to_longitute(362.2)
-    #     self.assertEqual(2.2, result)
-    #
-    # def test_dms_to_longitude_neg_wrap1(self):
-    #     result = gps.convert.dms_to_longitute(-180.9999)
-    #     self.assertEqual(179.0001, result)
-    #
-    # def test_dms_to_longitude_neg_wrap2(self):
-    #     result = gps.convert.dms_to_longitute(-180.9999)
-    #     self.assertEqual(179.0001, result)
+    def test_dec_to_longitude_wrap0_pos(self):
+        result = gps.convert.dec_to_longitude(45.9999)
+        self.assertAlmostEqual(45.9999, result, 3)
+
+    def test_dec_to_longitude_wrap1_pos(self):
+        result = gps.convert.dec_to_longitude(210.000001)
+        self.assertAlmostEqual(-150.000001, result, 3)
+
+    def test_dec_to_longitude_wrap2_pos(self):
+        result = gps.convert.dec_to_longitude(375.3)
+        self.assertAlmostEqual(15.3, result, 3)
+
+    def test_dec_to_latitude_wrap0_pos(self):
+        result = gps.convert.dec_to_latitude(10)
+        self.assertAlmostEqual(10, result, 3)
+
+    def test_dec_to_latitude_wrap1_pos(self):
+        result = gps.convert.dec_to_latitude(95)
+        self.assertAlmostEqual(85, result, 3)
+
+    def test_dec_to_latitude_wrap2_pos(self):
+        result = gps.convert.dec_to_latitude(190)
+        self.assertAlmostEqual(-10, result, 3)
+
+    def test_dec_to_latitude_wrap4_pos(self):
+        result = gps.convert.dec_to_latitude(350)
+        self.assertAlmostEqual(-10, result, 3)
+
+    def test_dec_to_latitude_wrap0_neg(self):
+        result = gps.convert.dec_to_latitude(-10)
+        self.assertAlmostEqual(-10, result, 3)
+
+    def test_dec_to_latitude_wrap1_neg(self):
+        result = gps.convert.dec_to_latitude(-95)
+        self.assertAlmostEqual(-85, result, 3)
+
+    def test_dec_to_latitude_wrap2_neg(self):
+        result = gps.convert.dec_to_latitude(-190)
+        self.assertAlmostEqual(10, result, 3)
+
+    def test_dec_to_latitude_wrap4_neg(self):
+        result = gps.convert.dec_to_latitude(-350)
+        self.assertAlmostEqual(10, result, 3)
