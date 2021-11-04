@@ -30,12 +30,22 @@ def dms_to_dec(degrees, minutes, seconds, direction):
         float
 
     """
-    pass
+    sign = 1
+    if direction.casefold()[0] in ['w', 's']:
+        sign = -1
+
+    degrees, minutes, seconds, direction = dms_correct(
+        degrees, minutes, seconds, direction
+    )
+
+    decimal = sign * (degrees + minutes/60 + seconds/3600)
+    return decimal
 
 
 def dms_correct(degrees, minutes, seconds, direction):
     """
-    Will correct degrees, minutes, seconds format
+    Will correct degrees, minutes, seconds for rollover.  It will not
+    return a direction, but rather a positive or negative number.
 
     Degrees will be corrected to a positive number
     If seconds is greater than 60 it rolls over into minutes.
@@ -48,28 +58,33 @@ def dms_correct(degrees, minutes, seconds, direction):
         degrees (int): degrees, truncated if decimal
         minutes (int): Minutes, truncated if decimal
         seconds (int): Seconds, truncated if decimal
-        direction (str): N|W|S|E
 
     Returns:
-        tuple: (degrees(int), minutes (int), seconds (int), direction (str))
+        tuple: (degrees(int), minutes (int), seconds (int))
     """
 
-    sign = -1
-    if abs(degrees) == degrees:
-        sign = 1
-
     direction = direction.upper()[:1]
-    degrees = int(abs(degrees))
-    minutes = int(abs(minutes))
-    seconds = int(abs(seconds))
 
-    degrees = int(degrees + int((minutes + int(seconds/60))/60))
-    degrees = degrees * sign
-    minutes = int(minutes + int(seconds/60))
-    minutes = int(minutes % 60)
-    seconds = int(seconds % 60)
+    sign = 1
+    if direction in ['W', 'S']:
+        sign = -1
 
-    return degrees, minutes, seconds, direction
+    if degrees < 0:
+        sign = -1
+
+    degrees = abs(degrees)
+    minutes = abs(minutes)
+    seconds = abs(seconds)
+
+    corrected_seconds = int(seconds % 60)
+    minutes = minutes + int(seconds/60)
+
+    corrected_minutes = int(minutes % 60)
+    degrees = degrees + int(minutes/60)
+
+    corrected_degrees = sign * int(degrees)
+
+    return corrected_degrees, corrected_minutes, corrected_seconds
 
 
 def dec_to_longitude(decimal):
