@@ -1,5 +1,7 @@
 from unittest import TestCase
+from gps.coordinate import Coordinate
 import gps.convert
+import gps.calculate
 
 
 class TestConvert(TestCase):
