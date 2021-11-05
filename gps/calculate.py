@@ -1,4 +1,9 @@
 
+from math import sin, cos, asin, acos, sqrt, radians
+
+Rearth = 6371.07103  # km
+
+
 def distance(lat1, lon1, lat2, lon2):
     """
     Calculates the distance between two coordinates
@@ -12,7 +17,26 @@ def distance(lat1, lon1, lat2, lon2):
     Returns:
         float: distance between two coordinates
     """
-    pass
+    lat1 = radians(lat1)
+    lat2 = radians(lat2)
+    lon1 = radians(lon1)
+    lon2 = radians(lon2)
+    print(lat1, lat2)
+    print(lon1, lon2)
+
+    delta_lat = lat2 - lat1
+    delta_lon = lon2 - lon1
+    print(f"delta_lat = {delta_lat}")
+    print(f"delta_lon = {delta_lon}")
+
+    central_angle = 2*asin(
+        sqrt(
+            sin(delta_lat/2)**2
+            + cos(lat2)*cos(lat1)*(sin(delta_lon/2))**2
+        )
+    )
+
+    return Rearth * central_angle
 
 
 def heading(lat1, lon1, lat2, lon2):

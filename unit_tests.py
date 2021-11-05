@@ -149,27 +149,32 @@ class TestConvert_distance_conversions(TestCase):
         result = gps.convert.dms_to_dec(34, 61.3, 0, 'N')
         self.assertAlmostEqual(result, 35.01667, 3)
 
-    def test_dms_to_dec_neg(self):
-        result = gps.convert.dms_to_dec(-77, 50, 30, 'E')
-        self.assertAlmostEqual(result, -77.84167)
-
+    # def test_dms_to_dec_neg(self):
+    #     result = gps.convert.dms_to_dec(-77, 50, 30, 'E')
+    #     self.assertAlmostEqual(result, -77.84167)
+    #
     # def test_dms_to_dec_wrap(self):
     #     self.assertTrue(True)
 
 
 class TestCalculate(TestCase):
 
+    def test_distance_whatever(self):
+        result = gps.calculate.distance(0, 0, 0, 179.9)
+        self.assertAlmostEqual(19990, result, 3)
+        # self.assertTrue(True)
+
     def test_distance_origin_NE(self):
         result = gps.calculate.distance(0, 0, 45, 45)
-        #self.asertAlmostEqual(6667, result, 3)
-        self.assertTrue(True)
-
-    def test_distance_PN2PP_boundary(self):
-        result = gps.calculate.distance(10, -45, 45, 10)
-        #self.asertAlmostEqual(6503, result, 3)
-        self.assertTrue(True)
-
-    def test_distance_PP2PN_boundary(self):
-        result = gps.calculate.distance(10, 179, 45, -10)
-        #self.asertAlmostEqual(13824, result, 3)
-        self.assertTrue(True)
+        self.assertAlmostEqual(6667, result, 3)
+        # self.assertTrue(True)
+    #
+    # def test_distance_PN2PP_boundary(self):
+    #     result = gps.calculate.distance(10, -45, 45, 10)
+    #     #self.asertAlmostEqual(6503, result, 3)
+    #     self.assertTrue(True)
+    #
+    # def test_distance_PP2PN_boundary(self):
+    #     result = gps.calculate.distance(10, 179, 45, -10)
+    #     #self.asertAlmostEqual(13824, result, 3)
+    #     self.assertTrue(True)
