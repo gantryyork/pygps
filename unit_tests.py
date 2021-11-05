@@ -1,8 +1,9 @@
 from unittest import TestCase
 import gps.convert
+import gps.calculate
 
 
-class TestConvert(TestCase):
+class TestConvert_distance_conversions(TestCase):
 
     def test_nm_to_km_positive(self):
         answer = 186.126
@@ -45,44 +46,44 @@ class TestConvert(TestCase):
         self.assertAlmostEqual(result, answer, 3)
 
     def test_dms_correct_neg_degrees(self):
-        result = gps.convert.dms_correct(-10, 10, 10, 'north')
-        self.assertEqual((-10, 10, 10, 'N'), result)
+        result = gps.convert.dms_correct(-10, 10.5, 10, 'north')
+        self.assertEqual((-10, 10, 10), result)
 
     def test_dms_correct_pos_degrees(self):
-        result = gps.convert.dms_correct(10, 10, 10, 'W')
-        self.assertEqual((10, 10, 10, 'W'), result)
+        result = gps.convert.dms_correct(10, 10, 10.5, 'W')
+        self.assertEqual((-10, 10, 10), result)
 
     def test_dms_correct_seconds_carry_1(self):
         result = gps.convert.dms_correct(10, 10, 90, 'W')
-        self.assertEqual((10, 11, 30, 'W'), result)
+        self.assertEqual((-10, 11, 30), result)
 
     def test_dms_correct_seconds_carry_2(self):
-        result = gps.convert.dms_correct(10, 10, 121, 'W')
-        self.assertEqual((10, 12, 1, 'W'), result)
+        result = gps.convert.dms_correct(10, 10, 121, 's')
+        self.assertEqual((-10, 12, 1), result)
 
     def test_dms_correct_minutes_carry_1(self):
         result = gps.convert.dms_correct(10, 61, 30, 'W')
-        self.assertEqual((11, 1, 30, 'W'), result)
+        self.assertEqual((-11, 1, 30), result)
 
     def test_dms_correct_minutes_carry_2(self):
-        result = gps.convert.dms_correct(10, 125, 30, 'W')
-        self.assertEqual((12, 5, 30, 'W'), result)
+        result = gps.convert.dms_correct(10, 125, 30, 'w')
+        self.assertEqual((-12, 5, 30), result)
 
     def test_dms_correct_degrees_exceed_90(self):
         result = gps.convert.dms_correct(92, 10, 30, 'west')
-        self.assertEqual((92, 10, 30, 'W'), result)
+        self.assertEqual((-92, 10, 30), result)
 
     def test_dms_correct_degrees_exceed_180(self):
-        result = gps.convert.dms_correct(372, 59, 59, 'W')
-        self.assertEqual((372, 59, 59, 'W'), result)
+        result = gps.convert.dms_correct(372, 59, 59, 'n')
+        self.assertEqual((372, 59, 59), result)
 
     def test_dms_correct_truncation(self):
         result = gps.convert.dms_correct(10.5, 59.1, 59.9999, 'W')
-        self.assertEqual((10, 59, 59, 'W'), result)
+        self.assertEqual((-10, 59, 59), result)
 
     def test_dms_correct_negative_values(self):
         result = gps.convert.dms_correct(-89.111, -65.111, -65.222, 'sOUth')
-        self.assertEqual((-90, 6, 5, 'S'), result)
+        self.assertEqual((-90, 6, 5), result)
 
     def test_dec_to_longitude_wrap0_neg(self):
         result = gps.convert.dec_to_longitude(-10.999)
@@ -139,3 +140,36 @@ class TestConvert(TestCase):
     def test_dec_to_latitude_wrap4_neg(self):
         result = gps.convert.dec_to_latitude(-350)
         self.assertAlmostEqual(10, result, 3)
+
+    def test_dms_to_dec_pos1(self):
+        result = gps.convert.dms_to_dec(34, 25, 10, 'N')
+        self.assertAlmostEqual(result, 34.41944, 3)
+
+    def test_dms_to_dec_pos2(self):
+        result = gps.convert.dms_to_dec(34, 61.3, 0, 'N')
+        self.assertAlmostEqual(result, 35.01667, 3)
+
+    def test_dms_to_dec_neg(self):
+        result = gps.convert.dms_to_dec(-77, 50, 30, 'E')
+        self.assertAlmostEqual(result, -77.84167)
+
+    # def test_dms_to_dec_wrap(self):
+    #     self.assertTrue(True)
+
+
+class TestCalculate(TestCase):
+
+    def test_distance_origin_NE(self):
+        result = gps.calculate.distance(0, 0, 45, 45)
+        #self.asertAlmostEqual(6667, result, 3)
+        self.assertTrue(True)
+
+    def test_distance_PN2PP_boundary(self):
+        result = gps.calculate.distance(10, -45, 45, 10)
+        #self.asertAlmostEqual(6503, result, 3)
+        self.assertTrue(True)
+
+    def test_distance_PP2PN_boundary(self):
+        result = gps.calculate.distance(10, 179, 45, -10)
+        #self.asertAlmostEqual(13824, result, 3)
+        self.assertTrue(True)
