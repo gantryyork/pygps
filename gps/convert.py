@@ -34,9 +34,8 @@ def dms_to_dec(degrees, minutes, seconds, direction):
     if direction.casefold()[0] in ['w', 's']:
         sign = -1
 
-    degrees, minutes, seconds, direction = dms_correct(
-        degrees, minutes, seconds, direction
-    )
+    degrees, minutes, seconds = dms_correct(
+        degrees, minutes, seconds, direction)
 
     decimal = sign * (degrees + minutes/60 + seconds/3600)
     return decimal
