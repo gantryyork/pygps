@@ -1,3 +1,91 @@
+from enum import Enum
+
+
+class Unit(Enum):
+
+    FEET = 'ft'
+    KILOMETERS = 'km'
+    METERS = 'm'
+    MILES = 'mi'
+    NAUTICAL_MILES = 'nmi'
+
+
+def km(distance, unit):
+    """
+    Coverts the specified distance of a particular unit of measurement into
+    kilometers
+
+    Args:
+        distance (float):  distance
+        unit (Unit): units specified by the Enum Unit
+
+    Returns:
+        float: distance in kilometers
+    """
+
+    scalar = {
+        Unit.KILOMETERS:       1.0,
+        Unit.METERS:           0.001,
+        Unit.MILES:            1.609344,
+        Unit.NAUTICAL_MILES:   1.852,
+        Unit.FEET:             0.0003048,
+    }
+
+    return distance * scalar[unit]
+
+
+def m(distance, unit):
+
+    scalar = {
+        Unit.KILOMETERS:       1000,
+        Unit.METERS:           1.0,
+        Unit.MILES:            1609.344,
+        Unit.NAUTICAL_MILES:   1852,
+        Unit.FEET:             0.3048,
+    }
+
+    return distance * scalar[unit]
+
+
+def ft(distance, unit):
+
+    scalar = {
+        Unit.KILOMETERS:       3280.839895013,
+        Unit.METERS:           3.280839895,
+        Unit.MILES:            5280,
+        Unit.NAUTICAL_MILES:   6076.115485564,
+        Unit.FEET:             1.0,
+    }
+
+    return distance * scalar[unit]
+
+
+def nmi(distance, unit):
+
+    scalar = {
+        Unit.KILOMETERS:       0.539956803,
+        Unit.METERS:           0.000539957,
+        Unit.MILES:            0.86897798,
+        Unit.NAUTICAL_MILES:   1.0,
+        Unit.FEET:             0.000164579
+    }
+
+    return distance * scalar[unit]
+
+
+def mi(distance, unit):
+
+    scalar = {
+        Unit.KILOMETERS:       0.621369949,
+        Unit.METERS:           0.00062137,
+        Unit.MILES:            1.0,
+        Unit.NAUTICAL_MILES:   1.150777146,
+        Unit.FEET:             0.000189394,
+    }
+
+    return distance * scalar[unit]
+
+
 def dec_to_dms(decimal):
     """
     Takes any decimal number and converts it to degrees, minutes, seconds,
@@ -140,81 +228,3 @@ def dec_to_latitude(decimal):
         latitude = sign*(-180) + decimal_mod
 
     return latitude
-
-
-def nm_to_km(nm):
-    """
-    Converts nautical miles to kilometers
-
-    Args:
-        nm (float): nautical miles
-
-    Returns:
-        float: value representing kilometers
-    """
-    return nm * 1.852
-
-
-def nm_to_mi(nm):
-    """
-    Converts nautical miles to miles
-
-    Args:
-        nm (float): nautical miles
-
-    Returns:
-        float: value representing miles
-    """
-    return nm * 1.15078
-
-
-def km_to_nm(km):
-    """
-    Converts kilometers to nautical miles
-
-    Args:
-        nm (float): kilometers
-
-    Returns:
-        float: value representing nautical miles
-    """
-    return km * 0.539957
-
-
-def km_to_mi(km):
-    """
-    Converts kilometers to miles
-
-    Args:
-        km (float): kilometers
-
-    Returns:
-        float: value representing miles
-    """
-    return km * 0.6721371
-
-
-def mi_to_nm(mi):
-    """
-    Converts miles to nautical miles
-
-    Args:
-        miles (float): miles
-
-    Returns:
-        float: value representing miles
-    """
-    return mi * 0.868976
-
-
-def mi_to_km(mi):
-    """
-    Converts miles to kilometers
-
-    Args:
-        miles (float): miles
-
-    Returns:
-        float: value representing kilometers
-    """
-    return mi * 1.60934

@@ -3,47 +3,162 @@ import gps.convert
 import gps.calculate
 
 
-class TestConvert_distance_conversions(TestCase):
+class TestConvert_km(TestCase):
 
-    def test_nm_to_km_positive(self):
-        answer = 186.126
-        result = gps.convert.nm_to_km(100.5)
-        self.assertAlmostEqual(result, answer, 3)
+    def test_m_to_km(self):
+        distance = 2.5
+        unit = gps.convert.Unit.METERS
+        answer = 0.0025
+        result = gps.convert.km(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
 
-    def test_nm_to_km_negative(self):
-        answer = -59.4697572
-        result = gps.convert.nm_to_km(-32.1111)
-        self.assertAlmostEqual(result, answer, 3)
+    def test_nmi_to_km(self):
+        distance = 77.7
+        unit = gps.convert.Unit.NAUTICAL_MILES
+        answer = 143.9004
+        result = gps.convert.km(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
 
-    def test_km_to_nm_positive(self):
-        answer = 41.95464
-        result = gps.convert.km_to_nm(77.7)
-        self.assertAlmostEqual(result, answer, 3)
+    def test_mi_to_km(self):
+        distance = 32.666
+        unit = gps.convert.Unit.MILES
+        answer = 52.570831104
+        result = gps.convert.km(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
 
-    def test_km_to_nm_negative(self):
-        answer = -53.9951404
-        result = gps.convert.km_to_nm(-99.999)
-        self.assertAlmostEqual(result, answer, 3)
+    def test_ft_to_km(self):
+        distance = 10.5
+        unit = gps.convert.Unit.FEET
+        answer = 0.0032004
+        result = gps.convert.km(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
 
-    def test_mi_to_nm_positive(self):
-        answer = 8.68976328798
-        result = gps.convert.mi_to_nm(10.00001)
-        self.assertAlmostEqual(result, answer, 3)
 
-    def test_mi_to_nm_negative(self):
-        answer = -261.562
-        result = gps.convert.mi_to_nm(-301)
-        self.assertAlmostEqual(result, answer, 3)
+class TestConvert_m(TestCase):
 
-    def test_mi_to_km_positive(self):
-        answer = 16.0932791
-        result = gps.convert.mi_to_km(9.9999)
-        self.assertAlmostEqual(result, answer, 3)
+    def test_km_to_m(self):
+        distance = 5.5
+        unit = gps.convert.Unit.KILOMETERS
+        answer = 5500
+        result = gps.convert.m(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
 
-    def test_mi_to_km_negative(self):
-        answer = -4.83108975
-        result = gps.convert.mi_to_km(-3.0019)
-        self.assertAlmostEqual(result, answer, 3)
+    def test_mi_to_m(self):
+        distance = 101
+        unit = gps.convert.Unit.MILES
+        answer = 162543.744
+        result = gps.convert.m(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_nmi_to_m(self):
+        distance = 70.3
+        unit = gps.convert.Unit.NAUTICAL_MILES
+        answer = 130195.6
+        result = gps.convert.m(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_ft_to_m(self):
+        distance = 32.5
+        unit = gps.convert.Unit.FEET
+        answer = 9.906
+        result = gps.convert.m(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+
+class TestConvert_ft(TestCase):
+
+    def test_km_to_ft(self):
+        distance = 5.5
+        unit = gps.convert.Unit.KILOMETERS
+        answer = 18044.619422572
+        result = gps.convert.ft(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_mi_to_ft(self):
+        distance = 101
+        unit = gps.convert.Unit.MILES
+        answer = 533280
+        result = gps.convert.ft(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_nmi_to_ft(self):
+        distance = 70.3
+        unit = gps.convert.Unit.NAUTICAL_MILES
+        answer = 427150.91863517
+        result = gps.convert.ft(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_m_to_ft(self):
+        distance = 32.5
+        unit = gps.convert.Unit.METERS
+        answer = 106.627296588
+        result = gps.convert.ft(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+
+class TestConvert_nmi(TestCase):
+
+    def test_km_to_nmi(self):
+        distance = 5.5
+        unit = gps.convert.Unit.KILOMETERS
+        answer = 2.969762419
+        result = gps.convert.nmi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_mi_to_nmi(self):
+        distance = 101
+        unit = gps.convert.Unit.MILES
+        answer = 87.766775966
+        result = gps.convert.nmi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_ft_to_nmi(self):
+        distance = 70.3
+        unit = gps.convert.Unit.FEET
+        answer = 0.011569892
+        result = gps.convert.nmi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_m_to_nmi(self):
+        distance = 32.5
+        unit = gps.convert.Unit.METERS
+        answer = 0.017548596
+        result = gps.convert.nmi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+
+class TestConvert_mi(TestCase):
+
+    def test_km_to_mi(self):
+        distance = 5.5
+        unit = gps.convert.Unit.KILOMETERS
+        answer = 3.417534722
+        result = gps.convert.mi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_nmi_to_mi(self):
+        distance = 101
+        unit = gps.convert.Unit.NAUTICAL_MILES
+        answer = 116.228491793
+        result = gps.convert.mi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_ft_to_mi(self):
+        distance = 70.3
+        unit = gps.convert.Unit.FEET
+        answer = 0.013314367
+        result = gps.convert.mi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+    def test_m_to_mi(self):
+        distance = 32.5
+        unit = gps.convert.Unit.METERS
+        answer = 0.020194523
+        result = gps.convert.mi(distance, unit)
+        self.assertAlmostEqual(result, answer, 5)
+
+
+class TestConvert_dms_correct(TestCase):
 
     def test_dms_correct_neg_degrees(self):
         result = gps.convert.dms_correct(-10, 10.5, 10, 'north')
@@ -85,6 +200,9 @@ class TestConvert_distance_conversions(TestCase):
         result = gps.convert.dms_correct(-89.111, -65.111, -65.222, 'sOUth')
         self.assertEqual((-90, 6, 5), result)
 
+
+class TestConvert_dec_to_longitude(TestCase):
+
     def test_dec_to_longitude_wrap0_neg(self):
         result = gps.convert.dec_to_longitude(-10.999)
         self.assertAlmostEqual(-10.999, result, 3)
@@ -108,6 +226,9 @@ class TestConvert_distance_conversions(TestCase):
     def test_dec_to_longitude_wrap2_pos(self):
         result = gps.convert.dec_to_longitude(375.3)
         self.assertAlmostEqual(15.3, result, 3)
+
+
+class TestConvert_dec_to_latitude(TestCase):
 
     def test_dec_to_latitude_wrap0_pos(self):
         result = gps.convert.dec_to_latitude(10)
@@ -141,6 +262,9 @@ class TestConvert_distance_conversions(TestCase):
         result = gps.convert.dec_to_latitude(-350)
         self.assertAlmostEqual(10, result, 3)
 
+
+class TestConvert_dms_to_dec(TestCase):
+
     def test_dms_to_dec_pos1(self):
         result = gps.convert.dms_to_dec(34, 25, 10, 'N')
         self.assertAlmostEqual(result, 34.41944, 3)
@@ -159,14 +283,14 @@ class TestConvert_distance_conversions(TestCase):
 
 class TestCalculate(TestCase):
 
-    def test_distance_whatever(self):
-        result = gps.calculate.distance(0, 0, 0, 179.9)
-        self.assertAlmostEqual(19990, result, 3)
+    def test_distance_equator1(self):
+        result = gps.calculate.distance(0, 0, 0, 45.0)
+        self.assertAlmostEqual(5004.0, result, 1)
         # self.assertTrue(True)
 
-    def test_distance_origin_NE(self):
-        result = gps.calculate.distance(0, 0, 45, 45)
-        self.assertAlmostEqual(6667, result, 3)
+    def test_distance_equator2(self):
+        result = gps.calculate.distance(0, 0, 0, 90)
+        self.assertAlmostEqual(10000.1, result, 3)
         # self.assertTrue(True)
     #
     # def test_distance_PN2PP_boundary(self):

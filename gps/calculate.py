@@ -1,5 +1,5 @@
 
-from math import sin, cos, asin, acos, sqrt, radians
+from math import sin, cos, asin, acos, atan, sqrt, radians
 
 Rearth = 6371.07103  # km
 
@@ -24,16 +24,22 @@ def distance(lat1, lon1, lat2, lon2):
     print(lat1, lat2)
     print(lon1, lon2)
 
-    delta_lat = lat2 - lat1
-    delta_lon = lon2 - lon1
+    delta_lat = (lat2 - lat1)
+    delta_lon = (lon2 - lon1)
     print(f"delta_lat = {delta_lat}")
     print(f"delta_lon = {delta_lon}")
 
-    central_angle = 2*asin(
-        sqrt(
-            sin(delta_lat/2)**2
-            + cos(lat2)*cos(lat1)*(sin(delta_lon/2))**2
+    # central_angle = 2*asin(
+    #     sqrt(
+    #         sin(delta_lat/2)**2
+    #         + cos(lat2)*cos(lat1)*(sin(delta_lon/2))**2
+    #     )
+    # )
+    central_angle = 2 * atan(
+        2 * (
+
         )
+
     )
 
     return Rearth * central_angle
